@@ -13,7 +13,7 @@ namespace Sleepy_Bot
         public static bool isbot = true;
 
         // the current version
-        public static string version = "0.1";
+        public static string version = "0.1a";
 
         static void Main(string[] args)
         {
@@ -32,23 +32,29 @@ namespace Sleepy_Bot
             // sleepy-bot can recieve messages
             client.MessageReceived += (sender, e) => 
                 {
+                    // split the input message based on spaces
+                    // the value at 0 should be the command 
+                    string[] message = e.MessageText.ToLower().Split(' ');
+
                     // !help
                     // gives a list of commands
-                    if (e.MessageText.ToLower() == "!help")
+                    if (message[0] == "!help")
                     {
                         e.Channel.SendMessage("I can respond to these commands (remember to put an ! first):");
                         e.Channel.SendMessage("info");
                     }
 
                     // !info
-                    else if (e.MessageText.ToLower() == "!info")
+                    else if (message[0] == "!info")
                     {
                         e.Channel.SendMessage("Hi there! I'm sleepy-bot. I was made by Chris Serpico using DiscordSharp by LuigiFan with some help from NaamloosDT.");
                         e.Channel.SendMessage("I'm currently running version " + version + "! :grinning:");
                     }
 
+                    // !status
+
                     // sleepy bot doesn't like being insulted
-                    else if (e.MessageText.ToLower().Contains("hate") && e.MessageText.ToLower().Contains("sleepy-bot"))
+                    else if (message.Contains<string>("hate") && message.Contains<string>("sleepy-bot"))
                     {
                         e.Channel.SendMessage("That's not a very nice thing to say :cry:");
                     }
