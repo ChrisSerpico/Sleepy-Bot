@@ -60,6 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="libsodium.dll" />
+    <Content Include="memes\120515.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="memes\DzPaYYT.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="opus.dll" />
     <Content Include="secrets.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

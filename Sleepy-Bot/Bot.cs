@@ -1,6 +1,7 @@
 ﻿using DiscordSharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Sleepy_Bot
         public static bool isbot = true;
 
         // the current version
-        public static string version = "0.1a";
+        public static string version = "0.2";
 
         static void Main(string[] args)
         {
@@ -34,6 +35,7 @@ namespace Sleepy_Bot
                 {
                     // split the input message based on spaces
                     // the value at 0 should be the command 
+                    // TODO make this a switch case in a different function somewhere else 
                     string[] message = e.MessageText.ToLower().Split(' ');
 
                     // !help
@@ -51,7 +53,14 @@ namespace Sleepy_Bot
                         e.Channel.SendMessage("I'm currently running version " + version + "! :grinning:");
                     }
 
-                    // !status
+                    // !meme
+                    else if (message[0] == "!meme")
+                    {
+                        Random rand = new Random();
+                        string[] files = Directory.GetFiles("memes");
+                        client.AttachFile(e.Channel, "me_irl", (files[rand.Next(files.Length)]));
+                        
+                    }
 
                     // sleepy bot doesn't like being insulted
                     else if (message.Contains<string>("hate") && message.Contains<string>("sleepy-bot"))
