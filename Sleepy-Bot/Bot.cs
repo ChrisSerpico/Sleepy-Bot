@@ -14,7 +14,7 @@ namespace Sleepy_Bot
         public static bool isbot = true;
 
         // the current version
-        public static string version = "0.2";
+        public static string version = "0.3b";
 
         static void Main(string[] args)
         {
@@ -44,6 +44,9 @@ namespace Sleepy_Bot
                     {
                         e.Channel.SendMessage("I can respond to these commands (remember to put an ! first):");
                         e.Channel.SendMessage("info");
+                        e.Channel.SendMessage("kappa");
+                        e.Channel.SendMessage("sneaky");
+                        e.Channel.SendMessage("triggered");
                     }
 
                     // !info
@@ -60,6 +63,23 @@ namespace Sleepy_Bot
                         string[] files = Directory.GetFiles("memes");
                         client.AttachFile(e.Channel, "me_irl", (files[rand.Next(files.Length)]));
                         
+                    }
+
+                    // !kappa and !sneakygasm
+                    else if (message[0] == "!kappa")
+                    {
+                        client.AttachFile(e.Channel, " ", "memes/kappa.jpg");
+                    }
+                    else if (message[0] == "!sneakygasm" || message[0] == "!sneaky")
+                    {
+                        client.AttachFile(e.Channel, " ", "memes/sneaky.jpg");
+                    }
+
+                    // !triggered
+                    // for anyone reading this code, this was a request. :/
+                    else if (message[0] == "!triggered")
+                    {
+                        e.Channel.SendMessage("Ṭ̷Ř̥̤̤̻̥̥ͧ̏ͦ̋͑͡Ɨ̘͉̲̯̹͔̿ͯͦ͋͂͡Ǥ̸̷͈͇͉̟̫͚͖͉̼̰̱̩͔̙̖̱̌͑ͥ̐ͤͧ̂͌̃ͬ͟͜ͅĠ̟͓͇̺̭̮̇̄̍̃ͬͣ͂ͪ̽̃̀͜Ɇ̛ͦ̄̓ͪ̇̌̄̒̊̓̾̐͒͋ͭ̀͗̚͝҉̧͙͍̦̣̤͇͓͙̲͍̪̤̻͢ͅṜ͓̠̘̥̼̈́̌ͬ͜ͅḚ̬̯͎͉̙̉ͧ͆̕Ƌ̶");
                     }
 
                     // sleepy bot doesn't like being insulted
