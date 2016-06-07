@@ -1,4 +1,5 @@
 ﻿using DiscordSharp;
+using DiscordSharp.Events;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,12 +17,15 @@ namespace Sleepy_Bot
         // the current version
         public static string version = "0.3b";
 
+        // the discordclient being used
+        private static DiscordClient client;
+
         static void Main(string[] args)
         {
             // read variables from file, this is to keep various authentication tokens secret
             Console.WriteLine("Reading variables from secrets.txt...");
             string[] variables = System.IO.File.ReadAllLines("secrets.txt");
-            DiscordClient client = new DiscordClient(variables[0], isbot);
+            client = new DiscordClient(variables[0], isbot);
             client.ClientPrivateInformation.Email = variables[1];
             client.ClientPrivateInformation.Password = variables[2];
 
@@ -38,48 +42,10 @@ namespace Sleepy_Bot
                     // TODO make this a switch case in a different function somewhere else 
                     string[] message = e.MessageText.ToLower().Split(' ');
 
-                    // !help
-                    // gives a list of commands
-                    if (message[0] == "!help")
+                    // if there's only one message, this is probably a simple request 
+                    if (message.Length == 1)
                     {
-                        e.Channel.SendMessage("I can respond to these commands (remember to put an ! first):");
-                        e.Channel.SendMessage("info");
-                        e.Channel.SendMessage("kappa");
-                        e.Channel.SendMessage("sneaky");
-                        e.Channel.SendMessage("triggered");
-                    }
-
-                    // !info
-                    else if (message[0] == "!info")
-                    {
-                        e.Channel.SendMessage("Hi there! I'm sleepy-bot. I was made by Chris Serpico using DiscordSharp by LuigiFan with some help from NaamloosDT.");
-                        e.Channel.SendMessage("I'm currently running version " + version + "! :grinning:");
-                    }
-
-                    // !meme
-                    else if (message[0] == "!meme")
-                    {
-                        Random rand = new Random();
-                        string[] files = Directory.GetFiles("memes");
-                        client.AttachFile(e.Channel, "me_irl", (files[rand.Next(files.Length)]));
-                        
-                    }
-
-                    // !kappa and !sneakygasm
-                    else if (message[0] == "!kappa")
-                    {
-                        client.AttachFile(e.Channel, " ", "memes/kappa.jpg");
-                    }
-                    else if (message[0] == "!sneakygasm" || message[0] == "!sneaky")
-                    {
-                        client.AttachFile(e.Channel, " ", "memes/sneaky.jpg");
-                    }
-
-                    // !triggered
-                    // for anyone reading this code, this was a request. :/
-                    else if (message[0] == "!triggered")
-                    {
-                        e.Channel.SendMessage("Ṭ̷Ř̥̤̤̻̥̥ͧ̏ͦ̋͑͡Ɨ̘͉̲̯̹͔̿ͯͦ͋͂͡Ǥ̸̷͈͇͉̟̫͚͖͉̼̰̱̩͔̙̖̱̌͑ͥ̐ͤͧ̂͌̃ͬ͟͜ͅĠ̟͓͇̺̭̮̇̄̍̃ͬͣ͂ͪ̽̃̀͜Ɇ̛ͦ̄̓ͪ̇̌̄̒̊̓̾̐͒͋ͭ̀͗̚͝҉̧͙͍̦̣̤͇͓͙̲͍̪̤̻͢ͅṜ͓̠̘̥̼̈́̌ͬ͜ͅḚ̬̯͎͉̙̉ͧ͆̕Ƌ̶");
+                        HandleSimpleRequest(message[0], e);
                     }
 
                     // sleepy bot doesn't like being insulted
@@ -117,6 +83,58 @@ namespace Sleepy_Bot
             Console.ReadKey();
             client.Logout();
             Environment.Exit(0); 
+        }
+
+        private static void HandleSimpleRequest(string message, DiscordMessageEventArgs e)
+        {
+            switch(message)
+            {
+                case "!help":
+                    {
+                        // !help
+                        // gives a list of commands
+                        e.Channel.SendMessage("I can respond to these commands (remember to put an ! first):\ninfo\nkappa\nsneaky\ntriggered");
+                        break;
+                    }
+                case "!info":
+                    {
+                        // !info
+                        // Gives a little bit of information about the bot
+                        e.Channel.SendMessage("Hi there! I'm sleepy-bot. I was made by Chris Serpico using DiscordSharp by LuigiFan with some help from NaamloosDT.");
+                        e.Channel.SendMessage("I'm currently running version " + version + "! :grinning:");
+                        break;
+                    }
+                case "!meme":
+                    {
+                        // !meme
+                        // sends a random file from a specific folder
+                        // TODO limit this to image files 
+                        Random rand = new Random();
+                        string[] files = Directory.GetFiles("memes");
+                        client.AttachFile(e.Channel, "me_irl", (files[rand.Next(files.Length)]));
+                        break;
+                    }
+                case "!kappa":
+                    {
+                        client.AttachFile(e.Channel, " ", "memes/kappa.jpg");
+                        break;
+                    }
+                case "!sneaky":
+                case "!sneakygasm":
+                    {
+                        client.AttachFile(e.Channel, " ", "memes/sneaky.jpg");
+                        break;
+                    }
+                case "!triggered":
+                    {
+                        // !triggered
+                        // for anyone reading this code, this was a request. :/
+
+
+                        e.Channel.SendMessage("Ṭ̷Ř̥̤̤̻̥̥ͧ̏ͦ̋͑͡Ɨ̘͉̲̯̹͔̿ͯͦ͋͂͡Ǥ̸̷͈͇͉̟̫͚͖͉̼̰̱̩͔̙̖̱̌͑ͥ̐ͤͧ̂͌̃ͬ͟͜ͅĠ̟͓͇̺̭̮̇̄̍̃ͬͣ͂ͪ̽̃̀͜Ɇ̛ͦ̄̓ͪ̇̌̄̒̊̓̾̐͒͋ͭ̀͗̚͝҉̧͙͍̦̣̤͇͓͙̲͍̪̤̻͢ͅṜ͓̠̘̥̼̈́̌ͬ͜ͅḚ̬̯͎͉̙̉ͧ͆̕Ƌ̶");
+                        break;
+                    }
+            }
         }
     }
 }
