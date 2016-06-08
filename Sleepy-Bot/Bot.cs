@@ -15,7 +15,7 @@ namespace Sleepy_Bot
         public static bool isbot = true;
 
         // the current version
-        public static string version = "0.3c";
+        public static string version = "0.3d";
 
         // the discordclient being used
         private static DiscordClient client;
@@ -95,7 +95,9 @@ namespace Sleepy_Bot
                         // gives a list of commands
                         e.Channel.SendMessage("I can respond to these commands (remember to put an ! first):" + 
                             "\ninfo" +
+                            "\nmeme" + 
                             "\nkappa" +
+                            "\nkappapride" +
                             "\nsneaky" +
                             "\nkrey" +
                             "\ntriggered");
