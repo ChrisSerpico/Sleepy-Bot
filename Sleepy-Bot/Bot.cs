@@ -15,7 +15,7 @@ namespace Sleepy_Bot
         public static bool isbot = true;
 
         // the current version
-        public static string version = "0.3b";
+        public static string version = "0.3c";
 
         // the discordclient being used
         private static DiscordClient client;
@@ -93,7 +93,12 @@ namespace Sleepy_Bot
                     {
                         // !help
                         // gives a list of commands
-                        e.Channel.SendMessage("I can respond to these commands (remember to put an ! first):\ninfo\nkappa\nsneaky\ntriggered");
+                        e.Channel.SendMessage("I can respond to these commands (remember to put an ! first):" + 
+                            "\ninfo" +
+                            "\nkappa" +
+                            "\nsneaky" +
+                            "\nkrey" +
+                            "\ntriggered");
                         break;
                     }
                 case "!info":
@@ -114,6 +119,8 @@ namespace Sleepy_Bot
                         client.AttachFile(e.Channel, "me_irl", (files[rand.Next(files.Length)]));
                         break;
                     }
+
+                // twitch chat emotes
                 case "!kappa":
                     {
                         client.AttachFile(e.Channel, " ", "memes/kappa.jpg");
@@ -125,6 +132,13 @@ namespace Sleepy_Bot
                         client.AttachFile(e.Channel, " ", "memes/sneaky.jpg");
                         break;
                     }
+                case "!krey":
+                case "!kreygasm":
+                    {
+                        client.AttachFile(e.Channel, " ", "memes/krey.jpg");
+                        break;
+                    }
+
                 case "!triggered":
                     {
                         // !triggered
