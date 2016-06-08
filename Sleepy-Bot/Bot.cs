@@ -138,6 +138,11 @@ namespace Sleepy_Bot
                         client.AttachFile(e.Channel, " ", "memes/krey.jpg");
                         break;
                     }
+                case "!kappapride":
+                    {
+                        client.AttachFile(e.Channel, " ", "memes/kappapride.jpg");
+                        break;
+                    }
 
                 case "!triggered":
                     {
