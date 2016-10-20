@@ -70,6 +70,8 @@
     <Content Include="secrets.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="changelog.txt" />
+    <Content Include="messages.txt" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bot.cs" />

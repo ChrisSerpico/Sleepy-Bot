@@ -15,7 +15,7 @@ namespace Sleepy_Bot
         public static bool isbot = true;
 
         // the current version
-        public static string version = "0.3d";
+        public static string version = "0.4a";
 
         // the discordclient being used
         private static DiscordClient client;
@@ -52,6 +52,13 @@ namespace Sleepy_Bot
                     else if (message.Contains<string>("hate") && message.Contains<string>("sleepy-bot"))
                     {
                         e.Channel.SendMessage("That's not a very nice thing to say :cry:");
+                    }
+
+                    // sleepy bot gets triggered
+                    // for anyone reading this code, this was a request. :/
+                    if (message.Contains<string>("trigger") || message.Contains<string>("triggered") || message.Contains<string>("triggers"))
+                    {
+                        e.Channel.SendMessage("Ṭ̷Ř̥̤̤̻̥̥ͧ̏ͦ̋͑͡Ɨ̘͉̲̯̹͔̿ͯͦ͋͂͡Ǥ̸̷͈͇͉̟̫͚͖͉̼̰̱̩͔̙̖̱̌͑ͥ̐ͤͧ̂͌̃ͬ͟͜ͅĠ̟͓͇̺̭̮̇̄̍̃ͬͣ͂ͪ̽̃̀͜Ɇ̛ͦ̄̓ͪ̇̌̄̒̊̓̾̐͒͋ͭ̀͗̚͝҉̧͙͍̦̣̤͇͓͙̲͍̪̤̻͢ͅṜ͓̠̘̥̼̈́̌ͬ͜ͅḚ̬̯͎͉̙̉ͧ͆̕Ƌ̶");
                     }
                 };
 
@@ -96,11 +103,7 @@ namespace Sleepy_Bot
                         e.Channel.SendMessage("I can respond to these commands (remember to put an ! first):" + 
                             "\ninfo" +
                             "\nmeme" + 
-                            "\nkappa" +
-                            "\nkappapride" +
-                            "\nsneaky" +
-                            "\nkrey" +
-                            "\ntriggered");
+                            "\nchangelog");
                         break;
                     }
                 case "!info":
@@ -118,11 +121,25 @@ namespace Sleepy_Bot
                         // TODO limit this to image files 
                         Random rand = new Random();
                         string[] files = Directory.GetFiles("memes");
-                        client.AttachFile(e.Channel, "me_irl", (files[rand.Next(files.Length)]));
+                        // get a message to go with the file from messages.txt
+                        // weight the first 5 more heavily, leaving the others as 'easter eggs'
+                        string[] messages = System.IO.File.ReadAllLines("messages.txt");
+                        string m; 
+                        if (rand.Next(5) < 4)
+                        {
+                            m = messages[rand.Next(5)];
+                        }
+                        else
+                        {
+                            m = messages[rand.Next(5, messages.Length)];
+                        }
+                        client.AttachFile(e.Channel, m, (files[rand.Next(files.Length)]));
                         break;
                     }
 
                 // twitch chat emotes
+                // This is currently deprecated because discord now has custom emotes 
+                    /*
                 case "!kappa":
                     {
                         client.AttachFile(e.Channel, " ", "memes/kappa.jpg");
@@ -144,15 +161,21 @@ namespace Sleepy_Bot
                     {
                         client.AttachFile(e.Channel, " ", "memes/kappapride.jpg");
                         break;
-                    }
+                    } */
 
-                case "!triggered":
+                case "!changelog":
+                case "!change":
+                case "!changes":
+                case "!log":
                     {
-                        // !triggered
-                        // for anyone reading this code, this was a request. :/
-
-
-                        e.Channel.SendMessage("Ṭ̷Ř̥̤̤̻̥̥ͧ̏ͦ̋͑͡Ɨ̘͉̲̯̹͔̿ͯͦ͋͂͡Ǥ̸̷͈͇͉̟̫͚͖͉̼̰̱̩͔̙̖̱̌͑ͥ̐ͤͧ̂͌̃ͬ͟͜ͅĠ̟͓͇̺̭̮̇̄̍̃ͬͣ͂ͪ̽̃̀͜Ɇ̛ͦ̄̓ͪ̇̌̄̒̊̓̾̐͒͋ͭ̀͗̚͝҉̧͙͍̦̣̤͇͓͙̲͍̪̤̻͢ͅṜ͓̠̘̥̼̈́̌ͬ͜ͅḚ̬̯͎͉̙̉ͧ͆̕Ƌ̶");
+                        e.Channel.SendMessage("What's new in version " + version + "?");
+                        string[] changes = System.IO.File.ReadAllLines("changelog.txt");
+                        string m = "";
+                        for (int i = 0; i < changes.Length; i++)
+                        {
+                            m += changes[i] + "\n";
+                        }
+                        e.Channel.SendMessage(m);
                         break;
                     }
             }

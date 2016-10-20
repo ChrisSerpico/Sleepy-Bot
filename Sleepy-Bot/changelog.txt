@@ -1,0 +1,4 @@
+﻿+Made it so that sleepy-bot automatically responds to the word triggered
+-Removed emote commands, since discord has emotes now 
+-Removed the !triggered command 
+*!meme now sends random messages along with the meme 
